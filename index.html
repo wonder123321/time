@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Calculation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Расчет времени работы от аккумулятора</h1>
+    <form id="batteryForm">
+        <label for="voltage">Напряжение батареи (V):</label>
+        <input type="number" id="voltage" name="voltage" value="24"><br><br>
+
+        <label for="capacity">Емкость батареи (Ah):</label>
+        <input type="number" id="capacity" name="capacity" value="100"><br><br>
+
+        <label for="efficiency">КПД инвертора (%):</label>
+        <input type="number" id="efficiency" name="efficiency" value="90"><br><br>
+
+        <label for="power">Потребляемая мощность (W):</label>
+        <input type="number" id="power" name="power" value="250"><br><br>
+
+        <input type="button" value="Рассчитать" id="calculateBtn">
+    </form>
+
+    <h2>Результаты:</h2>
+    <p>Общая энергия (Wh): <span id="totalEnergy"></span></p>
+    <p>Полезная энергия (Wh): <span id="usableEnergy"></span></p>
+    <p>Время работы (часы): <span id="operatingTime"></span></p>
+
+    <script>
+        $(document).ready(function(){
+            $('#calculateBtn').click(function(){
+                var voltage = parseFloat($('#voltage').val());
+                var capacity = parseFloat($('#capacity').val());
+                var efficiency = parseFloat($('#efficiency').val());
+                var power = parseFloat($('#power').val());
+
+                var totalEnergy = voltage * capacity;
+                var usableEnergy = totalEnergy * (efficiency / 100);
+                var operatingTime = usableEnergy / power;
+
+                $('#totalEnergy').text(totalEnergy.toFixed(2));
+                $('#usableEnergy').text(usableEnergy.toFixed(2));
+                $('#operatingTime').text(operatingTime.toFixed(2));
+            });
+        });
+    </script>
+</body>
+</html>
